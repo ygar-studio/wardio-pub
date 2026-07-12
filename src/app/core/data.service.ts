@@ -223,7 +223,11 @@ export class DataService {
       (ids ?? [])
         .map((id) => this.spellById.get(id))
         .filter((s): s is SpellRow => !!s);
-    const runesOf = (rn?: RecRaw['runes']): RuneRow[] =>
+    const runesOf = (rn?: {
+      primary_tree_id?: number;
+      secondary_tree_id?: number;
+      rune_ids?: number[];
+    }): RuneRow[] =>
       (rn?.rune_ids ?? [])
         .map((id) => {
           const m = this.runeById.get(id);
