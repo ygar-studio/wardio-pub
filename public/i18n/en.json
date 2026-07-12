@@ -1,0 +1,76 @@
+{
+  "nav": { "home": "Home", "champions": "Champions" },
+  "home": {
+    "tagline": "Meta runes, builds and tier lists in champion select, a live in-game overlay with objective timers, and your own profile synced from the client. This site explores the same public data the app uses.",
+    "browse": "Browse champions",
+    "features": {
+      "pregame": {
+        "t": "Pre-game",
+        "b": "Runes, spells, item path, skill order, tier and counters for your pick — with one-click rune import."
+      },
+      "champions": {
+        "t": "Champions",
+        "b": "Blitz-style build pages and a sortable tier list across every role."
+      },
+      "ingame": {
+        "t": "In-game",
+        "b": "Transparent overlay with Dragon / Baron / Herald timers and a live scoreboard."
+      },
+      "profile": {
+        "t": "Profile",
+        "b": "Your Riot ID, level and ranked, auto-synced from the running client."
+      }
+    }
+  },
+  "champions": {
+    "title": "Champions",
+    "search": "Search champions…",
+    "allRoles": "All roles",
+    "noData": "No tier data for this role yet.",
+    "loading": "Loading champions…"
+  },
+  "cols": {
+    "tier": "Tier",
+    "champion": "Champion",
+    "role": "Role",
+    "win": "Win",
+    "wr": "Δ WR",
+    "pick": "Pick",
+    "ban": "Ban",
+    "matches": "Matches"
+  },
+  "detail": {
+    "back": "All champions",
+    "loading": "Loading…",
+    "champStats": "Champion stats",
+    "runes": "Runes",
+    "spells": "Summoner spells",
+    "skillOrder": "Skill order",
+    "buildOrder": "Build order",
+    "starting": "Starting",
+    "core": "Core",
+    "situational": "Situational",
+    "counters": "Counters",
+    "similar": "Similar champions",
+    "strengths": "Strengths",
+    "weaknesses": "Weaknesses",
+    "insights": "Key insights",
+    "tips": "Tips",
+    "counter": "Counter",
+    "favourable": "Favourable",
+    "noMatchup": "No matchup data yet.",
+    "noChampion": "No data for this champion yet.",
+    "page": "Page"
+  },
+  "stats": {
+    "attack": "Attack",
+    "defense": "Defense",
+    "magic": "Magic",
+    "difficulty": "Difficulty"
+  },
+  "common": { "patch": "Patch" },
+  "footer": {
+    "by": "by Ygar Studio",
+    "disclaimer": "Not endorsed by Riot Games. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc."
+  }
+}

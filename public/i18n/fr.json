@@ -1,0 +1,76 @@
+{
+  "nav": { "home": "Accueil", "champions": "Champions" },
+  "home": {
+    "tagline": "Runes, builds et tier lists méta en sélection de champion, un overlay en jeu avec les timers d'objectifs, et votre profil synchronisé depuis le client. Ce site explore les mêmes données publiques que l'application.",
+    "browse": "Parcourir les champions",
+    "features": {
+      "pregame": {
+        "t": "Pré-partie",
+        "b": "Runes, sorts, ordre d'objets, ordre de compétences, tier et counters pour votre pick — avec import de runes en un clic."
+      },
+      "champions": {
+        "t": "Champions",
+        "b": "Pages de build façon Blitz et une tier list triable pour chaque rôle."
+      },
+      "ingame": {
+        "t": "En jeu",
+        "b": "Overlay transparent avec les timers Dragon / Baron / Héraut et un tableau des scores en direct."
+      },
+      "profile": {
+        "t": "Profil",
+        "b": "Votre Riot ID, niveau et classement, synchronisés automatiquement depuis le client."
+      }
+    }
+  },
+  "champions": {
+    "title": "Champions",
+    "search": "Rechercher des champions…",
+    "allRoles": "Tous les rôles",
+    "noData": "Pas encore de données de tier pour ce rôle.",
+    "loading": "Chargement des champions…"
+  },
+  "cols": {
+    "tier": "Tier",
+    "champion": "Champion",
+    "role": "Rôle",
+    "win": "Victoire",
+    "wr": "Δ TV",
+    "pick": "Pick",
+    "ban": "Ban",
+    "matches": "Parties"
+  },
+  "detail": {
+    "back": "Tous les champions",
+    "loading": "Chargement…",
+    "champStats": "Statistiques du champion",
+    "runes": "Runes",
+    "spells": "Sorts d'invocateur",
+    "skillOrder": "Ordre des compétences",
+    "buildOrder": "Ordre de build",
+    "starting": "Départ",
+    "core": "Essentiel",
+    "situational": "Situationnel",
+    "counters": "Contres",
+    "similar": "Champions similaires",
+    "strengths": "Points forts",
+    "weaknesses": "Points faibles",
+    "insights": "Points clés",
+    "tips": "Conseils",
+    "counter": "Contre",
+    "favourable": "Favorable",
+    "noMatchup": "Pas encore de données de matchup.",
+    "noChampion": "Pas encore de données pour ce champion.",
+    "page": "Page"
+  },
+  "stats": {
+    "attack": "Attaque",
+    "defense": "Défense",
+    "magic": "Magie",
+    "difficulty": "Difficulté"
+  },
+  "common": { "patch": "Patch" },
+  "footer": {
+    "by": "par Ygar Studio",
+    "disclaimer": "Non affilié à Riot Games. League of Legends et Riot Games sont des marques ou des marques déposées de Riot Games, Inc."
+  }
+}

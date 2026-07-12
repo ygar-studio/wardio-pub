@@ -1,5 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { DataService } from '../../core/data.service';
 import { Role, ROLES, ROLE_LABEL, TierRow } from '../../core/models';
 
@@ -7,11 +8,13 @@ type SortCol = 'tier' | 'win' | 'wr' | 'pick' | 'ban' | 'matches';
 
 @Component({
   selector: 'app-champions',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslocoPipe],
   template: `
     <div class="flex flex-wrap items-end justify-between gap-3">
-      <h1 class="text-3xl font-extrabold">Champions</h1>
-      <span class="text-xs text-dim">Patch {{ data.patch() || '—' }}</span>
+      <h1 class="text-3xl font-extrabold">{{ 'champions.title' | transloco }}</h1>
+      <span class="text-xs text-dim"
+        >{{ 'common.patch' | transloco }} {{ data.patch() || '—' }}</span
+      >
     </div>
 
     <!-- Blitz-style filter bar. Role + search filter live; queue / rank /
@@ -29,13 +32,15 @@ type SortCol = 'tier' | 'win' | 'wr' | 'pick' | 'ban' | 'matches';
       <input
         #s
         (input)="search.set(s.value)"
-        placeholder="Search champions…"
+        [placeholder]="'champions.search' | transloco"
         class="min-w-[150px] flex-1 rounded-hex border border-line bg-card px-3 py-1.5 text-sm text-ink placeholder:text-dim/70 focus:border-cyan/50 focus:outline-none"
       />
     </div>
 
     <div class="mt-2 flex flex-wrap gap-1.5">
-      <button type="button" (click)="setRole(null)" [class]="chip(role() === null)">All roles</button>
+      <button type="button" (click)="setRole(null)" [class]="chip(role() === null)">
+        {{ 'champions.allRoles' | transloco }}
+      </button>
       @for (r of roles; track r) {
         <button type="button" (click)="setRole(r)" [class]="chip(role() === r)">
           {{ label(r) }}
@@ -44,21 +49,21 @@ type SortCol = 'tier' | 'win' | 'wr' | 'pick' | 'ban' | 'matches';
     </div>
 
     @if (data.loading()) {
-      <p class="mt-10 text-center text-dim">Loading champions…</p>
+      <p class="mt-10 text-center text-dim">{{ 'champions.loading' | transloco }}</p>
     } @else {
       <div class="mt-5 overflow-x-auto">
         <table class="w-full min-w-[720px] border-separate border-spacing-y-1.5">
           <thead>
             <tr class="text-[11px] font-semibold uppercase tracking-wide text-dim">
               <th class="px-3 text-left">#</th>
-              <th class="cursor-pointer px-2 text-left" (click)="sort('tier')">Tier</th>
-              <th class="px-2 text-left">Champion</th>
-              <th class="px-2 text-left">Role</th>
-              <th class="cursor-pointer px-2 text-right" (click)="sort('win')">Win</th>
-              <th class="cursor-pointer px-2 text-right" (click)="sort('wr')">Δ WR</th>
-              <th class="cursor-pointer px-2 text-right" (click)="sort('pick')">Pick</th>
-              <th class="cursor-pointer px-2 text-right" (click)="sort('ban')">Ban</th>
-              <th class="cursor-pointer px-3 text-right" (click)="sort('matches')">Matches</th>
+              <th class="cursor-pointer px-2 text-left" (click)="sort('tier')">{{ 'cols.tier' | transloco }}</th>
+              <th class="px-2 text-left">{{ 'cols.champion' | transloco }}</th>
+              <th class="px-2 text-left">{{ 'cols.role' | transloco }}</th>
+              <th class="cursor-pointer px-2 text-right" (click)="sort('win')">{{ 'cols.win' | transloco }}</th>
+              <th class="cursor-pointer px-2 text-right" (click)="sort('wr')">{{ 'cols.wr' | transloco }}</th>
+              <th class="cursor-pointer px-2 text-right" (click)="sort('pick')">{{ 'cols.pick' | transloco }}</th>
+              <th class="cursor-pointer px-2 text-right" (click)="sort('ban')">{{ 'cols.ban' | transloco }}</th>
+              <th class="cursor-pointer px-3 text-right" (click)="sort('matches')">{{ 'cols.matches' | transloco }}</th>
             </tr>
           </thead>
           <tbody>
@@ -114,7 +119,7 @@ type SortCol = 'tier' | 'win' | 'wr' | 'pick' | 'ban' | 'matches';
           </tbody>
         </table>
         @if (rows().length === 0) {
-          <p class="mt-8 text-center text-dim">No tier data for this role yet.</p>
+          <p class="mt-8 text-center text-dim">{{ 'champions.noData' | transloco }}</p>
         }
       </div>
     }

@@ -9,21 +9,22 @@ import {
 import { NgTemplateOutlet } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { DataService } from '../../core/data.service';
 import { Detail, Role, ROLE_LABEL } from '../../core/models';
 
 @Component({
   selector: 'app-champion-detail',
-  imports: [RouterLink, NgTemplateOutlet],
+  imports: [RouterLink, NgTemplateOutlet, TranslocoPipe],
   template: `
     <a
       routerLink="/champions"
       class="inline-flex items-center gap-1.5 text-sm font-semibold text-gold hover:underline"
-      >← All champions</a
+      >← {{ 'detail.back' | transloco }}</a
     >
 
     @if (data.loading()) {
-      <p class="mt-10 text-center text-dim">Loading…</p>
+      <p class="mt-10 text-center text-dim">{{ 'detail.loading' | transloco }}</p>
     } @else if (detail(); as d) {
       <!-- Header -->
       <div
@@ -71,27 +72,27 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
           class="mt-4 grid grid-cols-3 gap-y-3 hex-panel p-4 sm:grid-cols-6"
         >
           <div class="text-center">
-            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">Tier</div>
+            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">{{ 'cols.tier' | transloco }}</div>
             <div class="text-lg font-extrabold text-gold">{{ d.tier ?? '—' }}</div>
           </div>
           <div class="text-center">
-            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">Win rate</div>
+            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">{{ 'cols.win' | transloco }}</div>
             <div class="text-lg font-extrabold">{{ pct(d.winRate) }}</div>
           </div>
           <div class="text-center">
-            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">Δ WR</div>
+            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">{{ 'cols.wr' | transloco }}</div>
             <div class="text-lg font-extrabold" [class]="deltaClass(d.wrChange)">{{ delta(d.wrChange) }}</div>
           </div>
           <div class="text-center">
-            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">Pick rate</div>
+            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">{{ 'cols.pick' | transloco }}</div>
             <div class="text-lg font-extrabold">{{ pct(d.pickRate) }}</div>
           </div>
           <div class="text-center">
-            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">Ban rate</div>
+            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">{{ 'cols.ban' | transloco }}</div>
             <div class="text-lg font-extrabold">{{ pct(d.banRate) }}</div>
           </div>
           <div class="text-center">
-            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">Matches</div>
+            <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">{{ 'cols.matches' | transloco }}</div>
             <div class="text-lg font-extrabold">{{ matches(d.matches) }}</div>
           </div>
         </div>
@@ -102,11 +103,11 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
         <div class="flex flex-col gap-4">
           <!-- Champion stats (real Data Dragon): ratings + base stats. -->
           <section class="hex-panel p-4">
-            <h2 class="section-title">Champion stats</h2>
+            <h2 class="section-title">{{ 'detail.champStats' | transloco }}</h2>
             <div class="mt-3 grid gap-x-6 gap-y-2.5 sm:grid-cols-2">
-              @for (r of ratings(d); track r.label) {
+              @for (r of ratings(d); track r.key) {
                 <div class="flex items-center gap-3">
-                  <span class="w-20 text-xs text-dim">{{ r.label }}</span>
+                  <span class="w-20 text-xs text-dim">{{ 'stats.' + r.key | transloco }}</span>
                   <div class="h-2 flex-1 overflow-hidden rounded-full bg-card">
                     <div
                       class="h-full rounded-full"
@@ -131,7 +132,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
           @if (d.runes.length) {
             <section class="hex-panel p-4">
               <h2 class="section-title">
-                Runes · {{ d.primaryTree }} / {{ d.secondaryTree }}
+                {{ 'detail.runes' | transloco }} · {{ d.primaryTree }} / {{ d.secondaryTree }}
               </h2>
               <div class="mt-2 flex flex-col gap-1.5">
                 @for (r of d.runes; track $index) {
@@ -147,7 +148,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
 
           @if (d.spells.length) {
             <section class="hex-panel p-4">
-              <h2 class="section-title">Summoner spells</h2>
+              <h2 class="section-title">{{ 'detail.spells' | transloco }}</h2>
               <div class="mt-2 flex gap-2.5">
                 @for (s of d.spells; track s.name) {
                   <div class="flex items-center gap-2 rounded-hex border border-gold/30 bg-gold/10 px-2 py-1.5">
@@ -161,7 +162,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
 
           @if (d.skillPriority.length || d.skillLevels.length) {
             <section class="hex-panel p-4">
-              <h2 class="section-title">Skill order</h2>
+              <h2 class="section-title">{{ 'detail.skillOrder' | transloco }}</h2>
               @if (d.skillPriority.length) {
                 <div class="mt-2 flex items-center gap-2">
                   @for (s of d.skillPriority; track $index) {
@@ -185,9 +186,9 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
 
           @if (d.starting.length || d.core.length) {
             <section class="hex-panel p-4">
-              <h2 class="section-title">Build order</h2>
+              <h2 class="section-title">{{ 'detail.buildOrder' | transloco }}</h2>
               @if (d.starting.length) {
-                <p class="mt-2 text-[11px] text-dim">Starting</p>
+                <p class="mt-2 text-[11px] text-dim">{{ 'detail.starting' | transloco }}</p>
                 <div class="mt-1 flex flex-wrap gap-2">
                   @for (it of d.starting; track $index) {
                     <ng-container [ngTemplateOutlet]="itemPill" [ngTemplateOutletContext]="{ $implicit: it }" />
@@ -195,7 +196,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
                 </div>
               }
               @if (d.core.length) {
-                <p class="mt-3 text-[11px] text-dim">Core</p>
+                <p class="mt-3 text-[11px] text-dim">{{ 'detail.core' | transloco }}</p>
                 <div class="mt-1 flex flex-wrap items-center gap-2">
                   @for (it of d.core; track $index) {
                     @if ($index > 0) { <span class="text-dim">→</span> }
@@ -204,7 +205,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
                 </div>
               }
               @if (d.situational.length) {
-                <p class="mt-3 text-[11px] text-dim">Situational</p>
+                <p class="mt-3 text-[11px] text-dim">{{ 'detail.situational' | transloco }}</p>
                 <div class="mt-1 flex flex-wrap gap-2">
                   @for (it of d.situational; track $index) {
                     <ng-container [ngTemplateOutlet]="itemPill" [ngTemplateOutletContext]="{ $implicit: it }" />
@@ -218,7 +219,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
             <div class="grid gap-4 sm:grid-cols-2">
               @if (d.strengths.length) {
                 <section class="hex-panel p-4">
-                  <h2 class="section-title">Strengths</h2>
+                  <h2 class="section-title">{{ 'detail.strengths' | transloco }}</h2>
                   @for (s of d.strengths; track $index) {
                     <p class="mt-1.5 flex gap-2 text-sm text-dim"><span class="text-pos">▲</span>{{ s }}</p>
                   }
@@ -226,7 +227,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
               }
               @if (d.weaknesses.length) {
                 <section class="hex-panel p-4">
-                  <h2 class="section-title">Weaknesses</h2>
+                  <h2 class="section-title">{{ 'detail.weaknesses' | transloco }}</h2>
                   @for (w of d.weaknesses; track $index) {
                     <p class="mt-1.5 flex gap-2 text-sm text-dim"><span class="text-neg">▼</span>{{ w }}</p>
                   }
@@ -237,7 +238,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
 
           @if (d.insights.length) {
             <section class="hex-panel p-4">
-              <h2 class="section-title">Key insights</h2>
+              <h2 class="section-title">{{ 'detail.insights' | transloco }}</h2>
               @for (i of d.insights; track $index) {
                 <p class="mt-1.5 flex gap-2 text-sm text-dim"><span class="text-gold">•</span>{{ i }}</p>
               }
@@ -248,7 +249,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
         <!-- Right: counters + similar -->
         <div class="flex flex-col gap-4">
           <section class="hex-panel p-4">
-            <h2 class="section-title">Counters</h2>
+            <h2 class="section-title">{{ 'detail.counters' | transloco }}</h2>
             @if (d.duels.length) {
               <div class="mt-2 flex flex-col gap-1.5">
                 @for (m of pageRows(); track m.key) {
@@ -259,7 +260,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
                     <img [src]="m.portrait" alt="" class="h-7 w-7 rounded border border-line" />
                     <span class="text-sm font-semibold">{{ m.name }}</span>
                     <span class="ml-auto text-[11px] font-semibold" [class]="m.favourable ? 'text-pos' : 'text-neg'">
-                      {{ m.favourable ? 'Favourable' : 'Counter' }}
+                      {{ (m.favourable ? 'detail.favourable' : 'detail.counter') | transloco }}
                     </span>
                     <span class="w-12 text-right text-sm font-bold" [class]="m.favourable ? 'text-pos' : 'text-neg'">
                       {{ m.winRate.toFixed(1) }}%
@@ -270,18 +271,18 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
               @if (pageCount() > 1) {
                 <div class="mt-3 flex items-center gap-3">
                   <button type="button" (click)="prev()" [disabled]="page() === 0" [class]="pager(page() === 0)">◀</button>
-                  <span class="flex-1 text-center text-xs text-dim">Page {{ page() + 1 }} / {{ pageCount() }}</span>
+                  <span class="flex-1 text-center text-xs text-dim">{{ 'detail.page' | transloco }} {{ page() + 1 }} / {{ pageCount() }}</span>
                   <button type="button" (click)="next()" [disabled]="page() >= pageCount() - 1" [class]="pager(page() >= pageCount() - 1)">▶</button>
                 </div>
               }
             } @else {
-              <p class="mt-2 text-sm text-dim">No matchup data yet.</p>
+              <p class="mt-2 text-sm text-dim">{{ 'detail.noMatchup' | transloco }}</p>
             }
           </section>
 
           @if (d.similar.length) {
             <section class="hex-panel p-4">
-              <h2 class="section-title">Similar champions</h2>
+              <h2 class="section-title">{{ 'detail.similar' | transloco }}</h2>
               <div class="mt-2 flex flex-wrap gap-2">
                 @for (c of d.similar; track c.key) {
                   <a
@@ -298,7 +299,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
 
           @if (d.tips.length) {
             <section class="hex-panel p-4">
-              <h2 class="section-title">Tips</h2>
+              <h2 class="section-title">{{ 'detail.tips' | transloco }}</h2>
               @for (t of d.tips; track $index) {
                 <p class="mt-1.5 flex gap-2 text-sm text-dim"><span class="text-gold">•</span>{{ t }}</p>
               }
@@ -307,7 +308,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
         </div>
       </div>
     } @else {
-      <p class="mt-10 text-center text-dim">No data for this champion yet.</p>
+      <p class="mt-10 text-center text-dim">{{ 'detail.noChampion' | transloco }}</p>
     }
 
     <ng-template #itemPill let-it>
@@ -382,13 +383,13 @@ export class ChampionDetail {
     return ROLE_LABEL[r];
   }
 
-  ratings(d: Detail): { label: string; value: number; color: string }[] {
+  ratings(d: Detail): { key: string; value: number; color: string }[] {
     const r = d.champ.ratings;
     return [
-      { label: 'Attack', value: r.attack, color: 'bg-neg' },
-      { label: 'Defense', value: r.defense, color: 'bg-pos' },
-      { label: 'Magic', value: r.magic, color: 'bg-cyan' },
-      { label: 'Difficulty', value: r.difficulty, color: 'bg-gold' },
+      { key: 'attack', value: r.attack, color: 'bg-neg' },
+      { key: 'defense', value: r.defense, color: 'bg-pos' },
+      { key: 'magic', value: r.magic, color: 'bg-cyan' },
+      { key: 'difficulty', value: r.difficulty, color: 'bg-gold' },
     ];
   }
   baseStats(d: Detail): { label: string; value: string }[] {

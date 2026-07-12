@@ -1,18 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { DataService } from './core/data.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, TranslocoPipe],
   template: `
     <div class="min-h-screen flex flex-col">
       <header
         class="sticky top-0 z-20 border-b border-line bg-bg/85 backdrop-blur"
       >
-        <div
-          class="mx-auto flex max-w-6xl items-center gap-6 px-5 py-3"
-        >
+        <div class="mx-auto flex max-w-6xl items-center gap-6 px-5 py-3">
           <a routerLink="/" class="flex items-center gap-2.5 shrink-0">
             <img src="logo.png" alt="Wardio" class="h-9 w-9" />
             <span class="text-xl font-extrabold tracking-wide text-gold"
@@ -25,18 +24,36 @@ import { DataService } from './core/data.service';
               routerLinkActive="text-gold bg-gold/10"
               [routerLinkActiveOptions]="{ exact: true }"
               class="rounded-hex px-3 py-1.5 text-dim hover:text-ink"
-              >Home</a
+              >{{ 'nav.home' | transloco }}</a
             >
             <a
               routerLink="/champions"
               routerLinkActive="text-gold bg-gold/10"
               class="rounded-hex px-3 py-1.5 text-dim hover:text-ink"
-              >Champions</a
+              >{{ 'nav.champions' | transloco }}</a
             >
           </nav>
-          <span class="ml-auto text-xs text-dim">
-            @if (data.patch()) { Patch {{ data.patch() }} }
-          </span>
+          <div class="ml-auto flex items-center gap-3">
+            <div class="flex items-center gap-0.5 text-[11px] font-bold">
+              @for (l of langs; track l) {
+                <button
+                  type="button"
+                  (click)="setLang(l)"
+                  class="rounded px-1.5 py-0.5 uppercase"
+                  [class]="
+                    l === lang() ? 'text-gold' : 'text-dim hover:text-ink'
+                  "
+                >
+                  {{ l }}
+                </button>
+              }
+            </div>
+            <span class="text-xs text-dim">
+              @if (data.patch()) {
+                {{ 'common.patch' | transloco }} {{ data.patch() }}
+              }
+            </span>
+          </div>
         </div>
       </header>
 
@@ -44,7 +61,7 @@ import { DataService } from './core/data.service';
         <div
           class="mx-auto mt-4 w-full max-w-6xl rounded-hex border border-neg/40 bg-neg/10 px-4 py-3 text-sm text-neg"
         >
-          Couldn't load the dataset: {{ data.error() }}
+          {{ data.error() }}
         </div>
       }
 
@@ -53,10 +70,9 @@ import { DataService } from './core/data.service';
       </main>
 
       <footer class="border-t border-line px-5 py-6 text-center text-xs text-dim">
-        Wardio — by Ygar Studio
+        Wardio — {{ 'footer.by' | transloco }}
         <p class="mx-auto mt-2 max-w-2xl text-[11px] text-dim/70">
-          Not endorsed by Riot Games. League of Legends and Riot Games are
-          trademarks or registered trademarks of Riot Games, Inc.
+          {{ 'footer.disclaimer' | transloco }}
         </p>
       </footer>
     </div>
@@ -64,7 +80,23 @@ import { DataService } from './core/data.service';
 })
 export class App implements OnInit {
   readonly data = inject(DataService);
+  private readonly transloco = inject(TranslocoService);
+  readonly langs = ['en', 'fr', 'es'];
+  readonly lang = signal(this.transloco.getActiveLang());
+
   ngOnInit(): void {
     void this.data.load();
+    this.setLang(this.detectLang());
+  }
+
+  setLang(l: string): void {
+    this.transloco.setActiveLang(l);
+    this.lang.set(l);
+    document.documentElement.lang = l;
+  }
+
+  private detectLang(): string {
+    const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    return this.langs.includes(nav) ? nav : 'en';
   }
 }
