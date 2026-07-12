@@ -1,5 +1,13 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../core/data.service';
 import { Detail, Role, ROLE_LABEL } from '../../core/models';
@@ -19,7 +27,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
     } @else if (detail(); as d) {
       <!-- Header -->
       <div
-        class="mt-4 flex items-center gap-4 rounded-hex border border-line bg-surface p-4"
+        class="mt-4 flex items-center gap-4 hex-panel p-4"
       >
         <img
           [src]="d.champ.portrait"
@@ -60,7 +68,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
       <!-- Stat strip -->
       @if (d.winRate != null) {
         <div
-          class="mt-4 grid grid-cols-3 gap-y-3 rounded-hex border border-line bg-surface p-4 sm:grid-cols-6"
+          class="mt-4 grid grid-cols-3 gap-y-3 hex-panel p-4 sm:grid-cols-6"
         >
           <div class="text-center">
             <div class="text-[10px] font-semibold uppercase tracking-wide text-dim">Tier</div>
@@ -93,7 +101,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
         <!-- Left: build -->
         <div class="flex flex-col gap-4">
           <!-- Champion stats (real Data Dragon): ratings + base stats. -->
-          <section class="rounded-hex border border-line bg-surface p-4">
+          <section class="hex-panel p-4">
             <h2 class="section-title">Champion stats</h2>
             <div class="mt-3 grid gap-x-6 gap-y-2.5 sm:grid-cols-2">
               @for (r of ratings(d); track r.label) {
@@ -121,7 +129,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
           </section>
 
           @if (d.runes.length) {
-            <section class="rounded-hex border border-line bg-surface p-4">
+            <section class="hex-panel p-4">
               <h2 class="section-title">
                 Runes · {{ d.primaryTree }} / {{ d.secondaryTree }}
               </h2>
@@ -138,7 +146,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
           }
 
           @if (d.spells.length) {
-            <section class="rounded-hex border border-line bg-surface p-4">
+            <section class="hex-panel p-4">
               <h2 class="section-title">Summoner spells</h2>
               <div class="mt-2 flex gap-2.5">
                 @for (s of d.spells; track s.name) {
@@ -152,7 +160,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
           }
 
           @if (d.skillPriority.length || d.skillLevels.length) {
-            <section class="rounded-hex border border-line bg-surface p-4">
+            <section class="hex-panel p-4">
               <h2 class="section-title">Skill order</h2>
               @if (d.skillPriority.length) {
                 <div class="mt-2 flex items-center gap-2">
@@ -176,7 +184,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
           }
 
           @if (d.starting.length || d.core.length) {
-            <section class="rounded-hex border border-line bg-surface p-4">
+            <section class="hex-panel p-4">
               <h2 class="section-title">Build order</h2>
               @if (d.starting.length) {
                 <p class="mt-2 text-[11px] text-dim">Starting</p>
@@ -209,7 +217,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
           @if (d.strengths.length || d.weaknesses.length) {
             <div class="grid gap-4 sm:grid-cols-2">
               @if (d.strengths.length) {
-                <section class="rounded-hex border border-line bg-surface p-4">
+                <section class="hex-panel p-4">
                   <h2 class="section-title">Strengths</h2>
                   @for (s of d.strengths; track $index) {
                     <p class="mt-1.5 flex gap-2 text-sm text-dim"><span class="text-pos">▲</span>{{ s }}</p>
@@ -217,7 +225,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
                 </section>
               }
               @if (d.weaknesses.length) {
-                <section class="rounded-hex border border-line bg-surface p-4">
+                <section class="hex-panel p-4">
                   <h2 class="section-title">Weaknesses</h2>
                   @for (w of d.weaknesses; track $index) {
                     <p class="mt-1.5 flex gap-2 text-sm text-dim"><span class="text-neg">▼</span>{{ w }}</p>
@@ -228,7 +236,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
           }
 
           @if (d.insights.length) {
-            <section class="rounded-hex border border-line bg-surface p-4">
+            <section class="hex-panel p-4">
               <h2 class="section-title">Key insights</h2>
               @for (i of d.insights; track $index) {
                 <p class="mt-1.5 flex gap-2 text-sm text-dim"><span class="text-gold">•</span>{{ i }}</p>
@@ -239,7 +247,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
 
         <!-- Right: counters + similar -->
         <div class="flex flex-col gap-4">
-          <section class="rounded-hex border border-line bg-surface p-4">
+          <section class="hex-panel p-4">
             <h2 class="section-title">Counters</h2>
             @if (d.duels.length) {
               <div class="mt-2 flex flex-col gap-1.5">
@@ -272,7 +280,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
           </section>
 
           @if (d.similar.length) {
-            <section class="rounded-hex border border-line bg-surface p-4">
+            <section class="hex-panel p-4">
               <h2 class="section-title">Similar champions</h2>
               <div class="mt-2 flex flex-wrap gap-2">
                 @for (c of d.similar; track c.key) {
@@ -289,7 +297,7 @@ import { Detail, Role, ROLE_LABEL } from '../../core/models';
           }
 
           @if (d.tips.length) {
-            <section class="rounded-hex border border-line bg-surface p-4">
+            <section class="hex-panel p-4">
               <h2 class="section-title">Tips</h2>
               @for (t of d.tips; track $index) {
                 <p class="mt-1.5 flex gap-2 text-sm text-dim"><span class="text-gold">•</span>{{ t }}</p>
@@ -334,6 +342,27 @@ export class ChampionDetail {
     return this.data.detail(this.key(), this.role() ?? undefined);
   });
 
+  private readonly title = inject(Title);
+  private readonly meta = inject(Meta);
+
+  constructor() {
+    // Per-champion title + description for SEO.
+    effect(() => {
+      const d = this.detail();
+      if (!d) return;
+      this.title.setTitle(
+        `${d.champ.name} build, runes & counters — Wardio`,
+      );
+      const wr = d.winRate != null ? `, ${d.winRate.toFixed(1)}% win rate` : '';
+      this.meta.updateTag({
+        name: 'description',
+        content:
+          `${d.champ.name} ${ROLE_LABEL[d.role]} build: best runes, items, ` +
+          `skill order and counters${d.tier ? ` (${d.tier} tier${wr})` : ''}.`,
+      });
+    });
+  }
+
   readonly pageCount = computed(() =>
     Math.max(1, Math.ceil((this.detail()?.duels.length ?? 0) / this.pageSize)),
   );
@@ -377,12 +406,7 @@ export class ChampionDetail {
   }
 
   tab(active: boolean): string {
-    return (
-      'rounded-hex border px-3.5 py-1.5 text-xs font-semibold ' +
-      (active
-        ? 'border-gold/60 bg-gold/15 text-gold'
-        : 'border-line bg-card text-dim hover:text-ink')
-    );
+    return 'hex-chip ' + (active ? 'is-on' : 'is-off');
   }
   skillBadge(lead: boolean): string {
     return (

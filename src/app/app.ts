@@ -14,10 +14,7 @@ import { DataService } from './core/data.service';
           class="mx-auto flex max-w-6xl items-center gap-6 px-5 py-3"
         >
           <a routerLink="/" class="flex items-center gap-2.5 shrink-0">
-            <span
-              class="grid h-8 w-8 place-items-center rounded-[7px] border border-gold bg-gold/10 text-lg font-black text-gold"
-              >W</span
-            >
+            <img src="logo.png" alt="Wardio" class="h-9 w-9" />
             <span class="text-xl font-extrabold tracking-wide text-gold"
               >Wardio</span
             >
@@ -56,8 +53,7 @@ import { DataService } from './core/data.service';
       </main>
 
       <footer class="border-t border-line px-5 py-6 text-center text-xs text-dim">
-        Wardio — by Ygar Studio ·
-        <a class="text-cyan hover:underline" href="./curated.json">dataset</a>
+        Wardio — by Ygar Studio
         <p class="mx-auto mt-2 max-w-2xl text-[11px] text-dim/70">
           Not endorsed by Riot Games. League of Legends and Riot Games are
           trademarks or registered trademarks of Riot Games, Inc.

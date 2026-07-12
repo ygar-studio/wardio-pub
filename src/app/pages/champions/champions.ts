@@ -9,16 +9,33 @@ type SortCol = 'tier' | 'win' | 'wr' | 'pick' | 'ban' | 'matches';
   selector: 'app-champions',
   imports: [RouterLink],
   template: `
-    <h1 class="text-3xl font-extrabold">Champions</h1>
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <h1 class="text-3xl font-extrabold">Champions</h1>
+      <span class="text-xs text-dim">Patch {{ data.patch() || '—' }}</span>
+    </div>
 
-    <div class="mt-4 flex flex-wrap gap-2">
-      <button
-        type="button"
-        (click)="setRole(null)"
-        [class]="chip(role() === null)"
-      >
-        All roles
-      </button>
+    <!-- Blitz-style filter bar. Role + search filter live; queue / rank /
+         region are the meta brackets (one bracket of data until aggregation). -->
+    <div class="mt-4 flex flex-wrap items-center gap-2">
+      <select #q (change)="queue.set(q.value)" [class]="select">
+        @for (m of queues; track m) { <option [selected]="m === queue()">{{ m }}</option> }
+      </select>
+      <select #rk (change)="rank.set(rk.value)" [class]="select">
+        @for (r of ranks; track r) { <option [selected]="r === rank()">{{ r }}</option> }
+      </select>
+      <select #rg (change)="region.set(rg.value)" [class]="select">
+        @for (r of regions; track r) { <option [selected]="r === region()">{{ r }}</option> }
+      </select>
+      <input
+        #s
+        (input)="search.set(s.value)"
+        placeholder="Search champions…"
+        class="min-w-[150px] flex-1 rounded-hex border border-line bg-card px-3 py-1.5 text-sm text-ink placeholder:text-dim/70 focus:border-cyan/50 focus:outline-none"
+      />
+    </div>
+
+    <div class="mt-2 flex flex-wrap gap-1.5">
+      <button type="button" (click)="setRole(null)" [class]="chip(role() === null)">All roles</button>
       @for (r of roles; track r) {
         <button type="button" (click)="setRole(r)" [class]="chip(role() === r)">
           {{ label(r) }}
@@ -107,12 +124,31 @@ export class Champions {
   readonly data = inject(DataService);
   readonly roles = ROLES;
   readonly role = signal<Role | null>(null);
+  readonly search = signal('');
+  readonly queue = signal('Ranked');
+  readonly rank = signal('Emerald+');
+  readonly region = signal('World');
+  readonly queues = ['Ranked', 'ARAM', 'URF', 'Arena', 'Nexus Blitz'];
+  readonly ranks = [
+    'All ranks', 'Iron+', 'Bronze+', 'Silver+', 'Gold+', 'Platinum+',
+    'Emerald+', 'Diamond+', 'Master+',
+  ];
+  readonly regions = [
+    'World', 'EUW', 'EUNE', 'NA', 'KR', 'BR', 'LAN', 'LAS', 'OCE', 'TR', 'RU', 'JP',
+  ];
+  // Hextech-styled native select (double edge via ring + inner border).
+  readonly select =
+    'rounded-hex border border-line bg-card px-3 py-1.5 text-sm font-semibold ' +
+    'text-ink shadow-[inset_0_0_0_1px_rgba(240,192,90,0.08)] ' +
+    'hover:border-gold/40 focus:border-gold/60 focus:outline-none';
   private readonly sortCol = signal<SortCol | null>(null);
   private readonly sortDesc = signal(true);
 
   readonly rows = computed<TierRow[]>(() => {
     this.data.loading(); // recompute once data lands
-    const rows = this.data.tierList(this.role());
+    const needle = this.search().trim().toLowerCase();
+    let rows = this.data.tierList(this.role());
+    if (needle) rows = rows.filter((r) => r.name.toLowerCase().includes(needle));
     const col = this.sortCol();
     if (!col) return rows;
     const val = (r: TierRow): number => {
@@ -152,12 +188,7 @@ export class Champions {
   }
 
   chip(active: boolean): string {
-    return (
-      'rounded-hex border px-3.5 py-1.5 text-xs font-semibold ' +
-      (active
-        ? 'border-gold/60 bg-gold/15 text-gold'
-        : 'border-line bg-card text-dim hover:text-ink')
-    );
+    return 'hex-chip ' + (active ? 'is-on' : 'is-off');
   }
   tierBadge(t: string): string {
     const map: Record<string, string> = {

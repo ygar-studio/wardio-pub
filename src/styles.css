@@ -16,6 +16,75 @@
   --radius-hex: 6px;
 }
 
+/* Hextech "high magic" components — double borders, gilded gradients, glow. */
+.hex-chip {
+  border-radius: var(--radius-hex);
+  padding: 0.375rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid var(--color-line);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  transition:
+    color 0.12s,
+    border-color 0.12s,
+    box-shadow 0.12s,
+    background 0.12s;
+}
+.hex-chip.is-off {
+  color: var(--color-dim);
+  background: var(--color-card);
+}
+.hex-chip.is-off:hover {
+  color: var(--color-ink);
+  border-color: rgba(240, 192, 90, 0.35);
+}
+.hex-chip.is-on {
+  color: var(--color-gold);
+  border-color: rgba(240, 192, 90, 0.6);
+  background-image: linear-gradient(
+    180deg,
+    rgba(240, 192, 90, 0.22),
+    rgba(240, 192, 90, 0.05)
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(13, 14, 18, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 12px -5px rgba(240, 192, 90, 0.55);
+}
+
+.hex-cta {
+  border-radius: var(--radius-hex);
+  padding: 0.625rem 1.35rem;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #0d0e12;
+  background-image: linear-gradient(180deg, #f6cf78, #dfa646);
+  border: 1px solid rgba(240, 192, 90, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 0 0 1px rgba(13, 14, 18, 0.18),
+    0 0 18px -6px rgba(240, 192, 90, 0.6);
+  transition: filter 0.12s;
+}
+.hex-cta:hover {
+  filter: brightness(1.07);
+}
+
+.hex-panel {
+  border-radius: var(--radius-hex);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    inset 0 0 0 1px rgba(240, 192, 90, 0.04);
+}
+/* A gilded top hairline for section headers (subtle "rune" accent). */
+.hex-panel > .section-title,
+.section-title {
+  position: relative;
+}
+
 @layer base {
   html,
   body {
