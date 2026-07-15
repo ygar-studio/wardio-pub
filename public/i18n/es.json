@@ -1,48 +1,48 @@
 {
   "nav": { "home": "Inicio", "champions": "Campeones" },
   "home": {
-    "tagline": "Runas, builds y tier lists meta en la selección de campeón, un overlay en partida con temporizadores de objetivos, y tu propio perfil sincronizado desde el cliente. Este sitio explora los mismos datos públicos que usa la aplicación.",
+    "tagline": "Runas, builds y tier lists meta en la selecciÃ³n de campeÃ³n, un overlay en partida con temporizadores de objetivos, y tu propio perfil sincronizado desde el cliente. Este sitio explora los mismos datos pÃºblicos que usa la aplicaciÃ³n.",
     "browse": "Explorar campeones",
     "features": {
       "pregame": {
         "t": "Pre-partida",
-        "b": "Runas, hechizos, orden de objetos, orden de habilidades, tier y counters para tu pick — con importación de runas en un clic."
+        "b": "Runas, hechizos, orden de objetos, orden de habilidades, tier y counters para tu pick â€” con importaciÃ³n de runas en un clic."
       },
       "champions": {
         "t": "Campeones",
-        "b": "Páginas de build al estilo Blitz y una tier list ordenable para cada rol."
+        "b": "PÃ¡ginas de build al estilo Blitz y una tier list ordenable para cada rol."
       },
       "ingame": {
         "t": "En partida",
-        "b": "Overlay transparente con temporizadores de Dragón / Barón / Heraldo y un marcador en vivo."
+        "b": "Overlay transparente con temporizadores de DragÃ³n / BarÃ³n / Heraldo y un marcador en vivo."
       },
       "profile": {
         "t": "Perfil",
-        "b": "Tu Riot ID, nivel y clasificatoria, sincronizados automáticamente desde el cliente."
+        "b": "Tu Riot ID, nivel y clasificatoria, sincronizados automÃ¡ticamente desde el cliente."
       }
     }
   },
   "champions": {
     "title": "Campeones",
-    "search": "Buscar campeones…",
+    "search": "Buscar campeonesâ€¦",
     "allRoles": "Todos los roles",
-    "noData": "Aún no hay datos de tier para este rol.",
-    "loading": "Cargando campeones…"
+    "noData": "AÃºn no hay datos de tier para este rol.",
+    "loading": "Cargando campeonesâ€¦"
   },
   "cols": {
     "tier": "Tier",
-    "champion": "Campeón",
+    "champion": "CampeÃ³n",
     "role": "Rol",
     "win": "Victoria",
-    "wr": "Δ TV",
+    "wr": "Î” TV",
     "pick": "Pick",
     "ban": "Ban",
     "matches": "Partidas"
   },
   "detail": {
     "back": "Todos los campeones",
-    "loading": "Cargando…",
-    "champStats": "Estadísticas del campeón",
+    "loading": "Cargandoâ€¦",
+    "champStats": "EstadÃ­sticas del campeÃ³n",
     "runes": "Runas",
     "spells": "Hechizos de invocador",
     "skillOrder": "Orden de habilidades",
@@ -55,29 +55,35 @@
     "builds": "Builds",
     "positions": "Posiciones",
     "games": "partidas",
-    "damage": "Daño",
-    "physical": "Físico",
-    "magicDmg": "Mágico",
+    "damage": "DaÃ±o",
+    "physical": "FÃ­sico",
+    "magicDmg": "MÃ¡gico",
     "trueDmg": "Puro",
-    "synergies": "Mejores dúos",
+    "synergies": "Mejores dÃºos",
     "similar": "Campeones similares",
     "strengths": "Fortalezas",
     "weaknesses": "Debilidades",
     "insights": "Claves",
     "tips": "Consejos",
     "abilities": "Habilidades",
-    "hoverAbility": "Pasa el ratón sobre una habilidad para ver los detalles.",
+    "hoverAbility": "Pasa el ratÃ³n sobre una habilidad para ver los detalles.",
     "counter": "Counter",
     "favourable": "Favorable",
-    "noMatchup": "Aún no hay datos de enfrentamiento.",
-    "noChampion": "Aún no hay datos para este campeón.",
-    "page": "Página"
+    "noMatchup": "AÃºn no hay datos de enfrentamiento.",
+    "noChampion": "AÃºn no hay datos para este campeÃ³n.",
+    "page": "PÃ¡gina"
   },
   "stats": {
     "attack": "Ataque",
     "defense": "Defensa",
     "magic": "Magia",
     "difficulty": "Dificultad"
+  },
+  "download": {
+    "cta": "Descargar",
+    "title": "Descargar Wardio {{version}} para Windows",
+    "forWindows": "Descargar para Windows",
+    "allVersions": "todas las versiones"
   },
   "common": { "patch": "Parche" },
   "footer": {

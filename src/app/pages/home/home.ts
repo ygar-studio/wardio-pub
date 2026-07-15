@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { ReleaseService } from '../../core/release.service';
 
 @Component({
   selector: 'app-home',
@@ -14,11 +15,28 @@ import { TranslocoPipe } from '@jsverse/transloco';
       <p class="mx-auto mt-4 max-w-2xl text-lg text-dim">
         {{ 'home.tagline' | transloco }}
       </p>
-      <div class="mt-7 flex justify-center">
-        <a routerLink="/champions" class="hex-cta">{{
-          'home.browse' | transloco
-        }}</a>
+      <div class="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        @if (release.latest(); as rel) {
+          <a [href]="rel.installerUrl" class="hex-cta">
+            ↓ {{ 'download.forWindows' | transloco }}
+          </a>
+          <a routerLink="/champions" class="hex-cta-ghost">{{
+            'home.browse' | transloco
+          }}</a>
+        } @else {
+          <a routerLink="/champions" class="hex-cta">{{
+            'home.browse' | transloco
+          }}</a>
+        }
       </div>
+      @if (release.latest(); as rel) {
+        <p class="mt-3 text-xs text-dim">
+          v{{ rel.version }} · Windows ·
+          <a [href]="rel.pageUrl" class="underline hover:text-ink">{{
+            'download.allVersions' | transloco
+          }}</a>
+        </p>
+      }
     </section>
 
     <section class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -36,5 +54,6 @@ import { TranslocoPipe } from '@jsverse/transloco';
   `,
 })
 export class Home {
+  readonly release = inject(ReleaseService);
   readonly features = ['pregame', 'champions', 'ingame', 'profile'];
 }

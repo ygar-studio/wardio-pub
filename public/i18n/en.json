@@ -79,6 +79,12 @@
     "magic": "Magic",
     "difficulty": "Difficulty"
   },
+  "download": {
+    "cta": "Download",
+    "title": "Download Wardio {{version}} for Windows",
+    "forWindows": "Download for Windows",
+    "allVersions": "all versions"
+  },
   "common": { "patch": "Patch" },
   "footer": {
     "by": "by Ygar Studio",

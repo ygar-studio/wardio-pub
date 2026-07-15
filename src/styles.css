@@ -71,6 +71,23 @@
   filter: brightness(1.07);
 }
 
+/* Secondary CTA — same shape as .hex-cta, hairline instead of gold fill. */
+.hex-cta-ghost {
+  border-radius: var(--radius-hex);
+  padding: 0.625rem 1.35rem;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+  background: transparent;
+  border: 1px solid var(--color-line);
+}
+
+.hex-cta-ghost:hover {
+  border-color: rgba(240, 192, 90, 0.5);
+  color: var(--color-gold);
+}
+
 .hex-panel {
   position: relative;
   border-radius: var(--radius-hex);

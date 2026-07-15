@@ -9,6 +9,7 @@ import {
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { DataService } from './core/data.service';
+import { ReleaseService } from './core/release.service';
 
 interface LangOption {
   code: string;
@@ -47,6 +48,16 @@ interface LangOption {
             >
           </nav>
           <div class="ml-auto flex items-center gap-3">
+            @if (release.latest(); as rel) {
+              <a
+                [href]="rel.installerUrl"
+                class="hidden items-center gap-1.5 rounded-hex border border-gold/50 bg-gold/10 px-3 py-1.5 text-xs font-bold text-gold hover:bg-gold/20 sm:flex"
+                [title]="'download.title' | transloco: { version: rel.version }"
+              >
+                <span aria-hidden="true">↓</span>
+                {{ 'download.cta' | transloco }}
+              </a>
+            }
             <div class="relative">
               <button
                 type="button"
@@ -115,6 +126,7 @@ interface LangOption {
 })
 export class App implements OnInit {
   readonly data = inject(DataService);
+  readonly release = inject(ReleaseService);
   private readonly transloco = inject(TranslocoService);
   readonly langs: LangOption[] = [
     { code: 'en', label: 'English', flag: 'flags/gb.svg' },
@@ -132,6 +144,7 @@ export class App implements OnInit {
     // Set the language (and Data Dragon locale) before the first data load.
     this.setLang(this.detectLang());
     void this.data.load();
+    void this.release.load();
   }
 
   toggleLang(e: Event): void {
