@@ -1,25 +1,32 @@
 {
-  "nav": { "home": "Home", "champions": "Champions" },
+  "nav": {
+    "home": "Home",
+    "champions": "Champions"
+  },
   "home": {
-    "tagline": "Meta runes, builds and tier lists in champion select, a live in-game overlay with objective timers, and your own profile synced from the client. This site explores the same public data the app uses.",
+    "tagline": "Wardio's League of Legends statistics: tier lists by role, win-rate-weighted builds, counters and duos — recomputed every patch from real ranked games.",
     "browse": "Browse champions",
     "features": {
-      "pregame": {
-        "t": "Pre-game",
-        "b": "Runes, spells, item path, skill order, tier and counters for your pick — with one-click rune import."
+      "tiers": {
+        "t": "Tier lists",
+        "b": "A ranking per role, relative to the role rather than to an absolute threshold, with pick rate, ban rate and the win-rate change since the previous patch."
       },
-      "champions": {
-        "t": "Champions",
-        "b": "Blitz-style build pages and a sortable tier list across every role."
+      "builds": {
+        "t": "Builds",
+        "b": "Several builds per champion, clustered by keystone and sorted by win rate — runes, spells, skill order and items, each with its own."
       },
-      "ingame": {
-        "t": "In-game",
-        "b": "Transparent overlay with Dragon / Baron / Herald timers and a live scoreboard."
+      "matchups": {
+        "t": "Duels and duos",
+        "b": "Counters computed from same-position matchups, and the best duos from same-team wins."
       },
-      "profile": {
-        "t": "Profile",
-        "b": "Your Riot ID, level and ranked, auto-synced from the running client."
+      "modes": {
+        "t": "Modes",
+        "b": "Summoner's Rift and ARAM, aggregated separately — the Howling Abyss has its own balance, so it gets its own numbers."
       }
+    },
+    "method": {
+      "t": "How these numbers are produced",
+      "b": "A batch job queries Riot's public API each patch cycle, aggregates ranked games and publishes a static file. Win rates are shrunk toward 50 % by sample size, so a handful of games does not read as a certainty. Nothing is extrapolated: what is missing stays empty."
     }
   },
   "champions": {
@@ -79,13 +86,9 @@
     "magic": "Magic",
     "difficulty": "Difficulty"
   },
-  "download": {
-    "cta": "Download",
-    "title": "Download Wardio {{version}} for Windows",
-    "forWindows": "Download for Windows",
-    "allVersions": "all versions"
+  "common": {
+    "patch": "Patch"
   },
-  "common": { "patch": "Patch" },
   "footer": {
     "by": "by Ygar Studio",
     "disclaimer": "Not endorsed by Riot Games. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc."
