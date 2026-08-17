@@ -9,6 +9,14 @@ palette as the app — reading the public dataset and Data Dragon:
 - **Site** — <https://ygar-studio.github.io/wardio-pub/> (home · tier list · champion pages)
 - **Dataset** — <https://ygar-studio.github.io/wardio-pub/curated.json>
 
+## Git workflow
+
+Manual site/code changes: commit and push to `develop` directly (no PRs),
+then fast-forward `develop` into `main` when ready to deploy — `deploy.yml`
+only triggers on push to `main`. The automated `publish-dataset` job in
+`wardio-app` pushes `public/curated.json` straight to `main`; that push is
+separate from this rule and must keep targeting `main`.
+
 ## Build & deploy
 
 GitHub Actions (`.github/workflows/deploy.yml`) builds the Angular app and
